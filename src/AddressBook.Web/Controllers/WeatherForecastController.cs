@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace AddressBook.Web.Controllers
+namespace AddressBook.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

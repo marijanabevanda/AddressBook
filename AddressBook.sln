@@ -5,21 +5,18 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43470DD2-D878-4C29-914C-D4DEF2315305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Domain", "src\AddressBook.Domain\AddressBook.Domain.csproj", "{6C14AC90-79E0-433B-B421-C4C1CCA2C789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook.Domain", "src\AddressBook.Domain\AddressBook.Domain.csproj", "{6C14AC90-79E0-433B-B421-C4C1CCA2C789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Infrastructure", "src\AddressBook.Infrastructure\AddressBook.Infrastructure.csproj", "{C37D832B-ED53-4B96-A409-37AE8E2CB82B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook.Infrastructure", "src\AddressBook.Infrastructure\AddressBook.Infrastructure.csproj", "{C37D832B-ED53-4B96-A409-37AE8E2CB82B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Application", "src\AddressBook.Application\AddressBook.Application.csproj", "{A5653A59-B97D-47DE-AC13-6C6C025C77CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook.Application", "src\AddressBook.Application\AddressBook.Application.csproj", "{A5653A59-B97D-47DE-AC13-6C6C025C77CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Web", "src\AddressBook.Web\AddressBook.Web.csproj", "{81CE2756-5E4C-4D28-A596-F7E0B1DB8064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressBook.Api", "src\AddressBook.Web\AddressBook.Api.csproj", "{81CE2756-5E4C-4D28-A596-F7E0B1DB8064}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6C14AC90-79E0-433B-B421-C4C1CCA2C789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -38,6 +35,9 @@ Global
 		{81CE2756-5E4C-4D28-A596-F7E0B1DB8064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81CE2756-5E4C-4D28-A596-F7E0B1DB8064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81CE2756-5E4C-4D28-A596-F7E0B1DB8064}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6C14AC90-79E0-433B-B421-C4C1CCA2C789} = {43470DD2-D878-4C29-914C-D4DEF2315305}

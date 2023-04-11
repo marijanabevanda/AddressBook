@@ -1,6 +1,6 @@
 using System;
 
-namespace AddressBook.Web
+namespace AddressBook.Api
 {
     public class WeatherForecast
     {

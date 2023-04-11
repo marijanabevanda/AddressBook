@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AddressBook.Infrastructure;
 
-namespace AddressBook.Web
+namespace AddressBook.Api
 {
     public class Startup
     {
@@ -34,7 +34,7 @@ namespace AddressBook.Web
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressBook.Web", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressBook.Api", Version = "v1" });
             });
 
             services.AddConfiguredDbContext(Configuration, Environment.IsDevelopment());
@@ -49,7 +49,7 @@ namespace AddressBook.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressBook.Web v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressBook.Api v1"));
             }
 
             app.UseHttpsRedirection();
