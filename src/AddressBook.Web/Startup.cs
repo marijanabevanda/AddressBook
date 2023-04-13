@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AddressBook.Infrastructure;
+using AddressBook.Api.Extensions.ServiceExtensions;
 
 namespace AddressBook.Api
 {
@@ -37,8 +38,8 @@ namespace AddressBook.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressBook.Api", Version = "v1" });
             });
 
-            services.AddConfiguredDbContext(Configuration, Environment.IsDevelopment());
-
+            services.AddConfiguredDbContext(Configuration, Environment.IsDevelopment())
+                .AddRepositories();
 
         }
 
