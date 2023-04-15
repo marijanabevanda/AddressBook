@@ -5,6 +5,7 @@ using AddressBook.Domain.Interfaces;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,10 +70,11 @@ namespace AddressBook.Application.Services
         /// <param name="pageNumber">The page number to retrieve</param>
         /// <param name="pageSize">The number of contacts per page</param>
         /// <returns>The retrieved list of contacts, including telephone numbers</returns>
-        public async Task<List<ContactDto>> GetPagedWithTelephoneNumbersAsync(int pageNumber, int pageSize)
+        public async Task<(List<ContactDto> Contacts, int TotalCount)> GetPagedWithTelephoneNumbersAsync(int pageNumber, int pageSize)
         {
             var contacts = (await _contactRepository.GetPagedAsync(pageNumber, pageSize)).ToList();
-            return _mapper.Map<List<Contact>, List<ContactDto>>(contacts);
+            var totalCount = await _contactRepository.GetCountAsync();
+            return (_mapper.Map<List<Contact>, List<ContactDto>>(contacts), totalCount);
         }
 
 

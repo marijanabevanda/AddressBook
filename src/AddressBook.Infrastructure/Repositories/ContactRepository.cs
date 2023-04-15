@@ -36,6 +36,11 @@ namespace AddressBook.Infrastructure.Repositories
             return await _dbContext.Contacts.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await _dbContext.Contacts.CountAsync();
+        }
+
         public async Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize, bool includeTelephoneNumbers = false)
         {
 

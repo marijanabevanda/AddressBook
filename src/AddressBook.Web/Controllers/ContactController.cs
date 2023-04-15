@@ -1,6 +1,5 @@
 ﻿using AddressBook.Application.Dtos;
 using AddressBook.Application.Interfaces;
-using AddressBook.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,6 +8,10 @@ using Microsoft.Extensions.Logging;
 using AddressBook.Api.Models;
 using AutoMapper;
 using System.Linq;
+using System.Collections.Generic;
+using AddressBook.Api.Paging;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AddressBook.Api.Controllers
 {
@@ -25,6 +28,28 @@ namespace AddressBook.Api.Controllers
             _contactService = contactService;
             _logger = logger;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPaged([FromQuery] PagingRequest request)
+        {
+            try
+            {
+                var validRequest = new PagingRequest(request.PageNumber, request.PageSize);
+                var (contacts, totalCount) = await _contactService.GetPagedWithTelephoneNumbersAsync(request.PageNumber, request.PageSize);
+
+                if (!contacts.Any())
+                {
+                    return NotFound();
+                }
+           
+                return Ok(new PagedResponse<GetContactResponse>(_mapper.Map<List<ContactDto>, List<GetContactResponse>>(contacts), totalCount, validRequest.PageNumber, validRequest.PageSize));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Failed to get contacts.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet("{id}")]

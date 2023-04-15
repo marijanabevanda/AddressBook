@@ -1,9 +1,5 @@
 ﻿using AddressBook.Application.Dtos;
-using AddressBook.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AddressBook.Application.Interfaces
@@ -23,7 +19,7 @@ namespace AddressBook.Application.Interfaces
         /// <param name="pageNumber">The page number to retrieve</param>
         /// <param name="pageSize">The number of contacts per page</param>
         /// <returns>The retrieved list of contacts, including telephone numbers</returns>
-        Task<List<ContactDto>> GetPagedWithTelephoneNumbersAsync(int pageNumber, int pageSize);
+        Task<(List<ContactDto> Contacts, int TotalCount)> GetPagedWithTelephoneNumbersAsync(int pageNumber, int pageSize);
 
         /// <summary>
         /// Creates a new contact with the provided information, including telephone numbers
