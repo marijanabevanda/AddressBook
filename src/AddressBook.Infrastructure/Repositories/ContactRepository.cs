@@ -17,10 +17,11 @@ namespace AddressBook.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task CreateAsync(Contact contact)
+        public async Task<Contact> CreateAsync(Contact contact)
         {
             await _dbContext.Contacts.AddAsync(contact);
             await _dbContext.SaveChangesAsync();
+            return contact;
         }
 
         public async Task DeleteAsync(int id)
@@ -30,22 +31,24 @@ namespace AddressBook.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Contact>> GetAllAsync()
-        {
-            return await _dbContext.Contacts.ToListAsync();
-        }
-
         public async Task<Contact> GetByIdAsync(int id)
         {
             return await _dbContext.Contacts.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize, bool includeTelephoneNumbers = false)
         {
-            return await _dbContext.Contacts
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
+
+            var query = _dbContext.Contacts
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+
+            if (includeTelephoneNumbers)
+            {
+                query = query.Include(x => x.TelephoneNumbers);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task UpdateAsync(Contact contact)

@@ -10,9 +10,9 @@ namespace AddressBook.Domain.Interfaces
     public interface IContactRepository
     {
         Task<Contact> GetByIdAsync(int id);
-        Task<IEnumerable<Contact>> GetAllAsync();
-        Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize);
-        Task CreateAsync(Contact contact);
+        Task<IEnumerable<Contact>> GetAllAsync(bool includeTelephoneNumbers = true);
+        Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize, bool includeTelephoneNumbers = true);
+        Task<Contact> CreateAsync(Contact contact);
         Task UpdateAsync(Contact contact);
         Task DeleteAsync(int id);
     }

@@ -18,16 +18,17 @@ namespace AddressBook.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task CreateAsync(ContactTelephoneNumber telephoneNumber)
+
+        public async Task CreateRangeAsync(IEnumerable<ContactTelephoneNumber> telephoneNumbers)
         {
-            await _dbContext.ContactTelephoneNumbers.AddAsync(telephoneNumber);
+            await _dbContext.ContactTelephoneNumbers.AddRangeAsync(telephoneNumbers);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteRangeAsync(IEnumerable<int> telephoneNumbersIds)
         {
-            var contact = await GetByIdAsync(id);
-            _dbContext.ContactTelephoneNumbers.Remove(contact);
+            var telephoneNumbersToDelete = await _dbContext.ContactTelephoneNumbers.Where(tn => telephoneNumbersIds.Contains(tn.Id)).ToListAsync();
+            _dbContext.ContactTelephoneNumbers.RemoveRange(telephoneNumbersToDelete);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -36,14 +37,9 @@ namespace AddressBook.Infrastructure.Repositories
             return await _dbContext.ContactTelephoneNumbers.Where(x => x.ContactId == contactId).ToListAsync();
         }
 
-        public async Task<ContactTelephoneNumber> GetByIdAsync(int id)
+        public async Task UpdateRangeAsync(IEnumerable<ContactTelephoneNumber> telephoneNumbers)
         {
-            return await _dbContext.ContactTelephoneNumbers.FindAsync(id);
-        }
-
-        public async Task UpdateAsync(ContactTelephoneNumber telephoneNumber)
-        {
-            _dbContext.ContactTelephoneNumbers.Update(telephoneNumber);
+            _dbContext.ContactTelephoneNumbers.UpdateRange(telephoneNumbers);
             await _dbContext.SaveChangesAsync();
         }
     }
