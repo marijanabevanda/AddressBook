@@ -1,5 +1,5 @@
 ﻿using AddressBook.Application.Interfaces;
-using AddressBook.Application.Repositories;
+using AddressBook.Application.Services;
 using AddressBook.Domain.Interfaces;
 using AddressBook.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;

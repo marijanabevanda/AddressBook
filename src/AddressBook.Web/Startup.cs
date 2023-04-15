@@ -15,7 +15,7 @@ using AddressBook.Infrastructure;
 using AddressBook.Api.Extensions.ServiceExtensions;
 using AddressBook.Application;
 using System.Reflection;
-
+using AddressBook.Api.Mapper;
 
 namespace AddressBook.Api
 {
@@ -42,6 +42,7 @@ namespace AddressBook.Api
             });
 
             services.AddAutoMapper(typeof(Mapping).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(ApiMapping).GetTypeInfo().Assembly);
             services.AddConfiguredDbContext(Configuration, Environment.IsDevelopment())
                 .AddRepositories()
                 .AddDtoServices();

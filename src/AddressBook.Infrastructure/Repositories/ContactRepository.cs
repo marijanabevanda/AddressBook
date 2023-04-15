@@ -33,7 +33,7 @@ namespace AddressBook.Infrastructure.Repositories
 
         public async Task<Contact> GetByIdAsync(int id)
         {
-            return await _dbContext.Contacts.FindAsync(id);
+            return await _dbContext.Contacts.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
         }
 
         public async Task<IEnumerable<Contact>> GetPagedAsync(int pageNumber, int pageSize, bool includeTelephoneNumbers = false)
@@ -51,10 +51,11 @@ namespace AddressBook.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task UpdateAsync(Contact contact)
+        public async Task<Contact> UpdateAsync(Contact contact)
         {
-            _dbContext.Contacts.Update(contact);
+             _dbContext.Contacts.Update(contact);
             await _dbContext.SaveChangesAsync();
+            return contact;
         }
     }
 }

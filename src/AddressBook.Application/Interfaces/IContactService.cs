@@ -29,13 +29,13 @@ namespace AddressBook.Application.Interfaces
         /// Creates a new contact with the provided information, including telephone numbers
         /// </summary>
         /// <param name="contact">The contact information to create</param>
-        Task CreateAsync(ContactDto contact);
+        Task<ContactDto> CreateAsync(ContactDto contact);
 
         /// <summary>
         /// Updates the information of the contact with the provided information, including telephone numbers
         /// </summary>
         /// <param name="contact">The updated contact information, including telephone numbers</param>
-        Task UpdateAsync(ContactDto contact);
+        Task<ContactDto> UpdateAsync(int id, ContactDto contact);
 
         /// <summary>
         /// Deletes the contact with the provided ID, including all its telephone numbers
