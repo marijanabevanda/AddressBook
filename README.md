@@ -14,10 +14,11 @@ The application is built using .NET Core Web API and PostgreSQL database. Signal
 - Clone the repository
 - Navigate to the project directory
 - Run **'dotnet restore'** to install the project dependencies
+(dotnet ef database update --project src/AddressBook.Infrastructure/AddressBook.Infrastructure.csproj --startup-project src/AddressBook.Web/AddressBook.Api.csproj)
 - Update the connection string in the **'appsettings.json'** file to point to your PostgreSQL database.
 - Run the following command to create the database tables: **'dotnet ef database update'**
 - Run the application using **'dotnet run'**
-- The application should now be running
+- The application should now be running on http://localhost:5000
 
 ## Endpoints
 ### Get Paged Contacts
