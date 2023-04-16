@@ -17,6 +17,9 @@ using AddressBook.Api.Models.Validators;
 using FluentValidation.Results;
 using FluentValidation;
 using AddressBook.Api.Extensions.ValidationExtensions;
+using AddressBook.Api.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using AddressBook.Domain.Entities;
 
 namespace AddressBook.Api.Controllers
 {
@@ -29,14 +32,16 @@ namespace AddressBook.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IValidator<CreateContactRequest> _createValidator;
         private readonly IValidator<UpdateContactRequest> _updateValidator;
+        private readonly IHubContext<ContactHub> _contactHubContext;
 
-        public ContactController(IContactService contactService, ILogger<ContactController> logger, IMapper mapper, IValidator<CreateContactRequest> createValidator, IValidator<UpdateContactRequest> updateValidator)
+        public ContactController(IContactService contactService, ILogger<ContactController> logger, IMapper mapper, IValidator<CreateContactRequest> createValidator, IValidator<UpdateContactRequest> updateValidator, IHubContext<ContactHub> contactHubContext)
         {
             _contactService = contactService;
             _logger = logger;
             _mapper = mapper;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
+            _contactHubContext = contactHubContext;
         }
 
         [HttpGet]
@@ -52,7 +57,6 @@ namespace AddressBook.Api.Controllers
             }
 
             return Ok(new PagedResponse<GetContactResponse>(_mapper.Map<List<ContactDto>, List<GetContactResponse>>(contacts), totalCount, validRequest.PageNumber, validRequest.PageSize));
-
         }
 
         [HttpGet("{id}")]
@@ -83,6 +87,7 @@ namespace AddressBook.Api.Controllers
                 return BadRequest(ModelState);
             }
             var createdContact = await _contactService.CreateAsync(_mapper.Map<CreateContactRequest, ContactDto>(request));
+            await _contactHubContext.Clients.All.SendAsync("Created contact with name ", createdContact.Name);
 
             return CreatedAtAction(nameof(GetContactById), new { id = createdContact.Id }, createdContact);
 
