@@ -1,4 +1,5 @@
 ﻿using AddressBook.Application.Dtos;
+using AddressBook.Application.Exceptions;
 using AddressBook.Application.Interfaces;
 using AddressBook.Domain.Entities;
 using AddressBook.Domain.Interfaces;
@@ -32,8 +33,23 @@ namespace AddressBook.Application.Services
         /// <param name="contact">The contact information to create</param>
         public async Task<ContactDto> CreateAsync(ContactDto contact)
         {
-            var createdContact = await _contactRepository.CreateAsync(_mapper.Map<ContactDto, Contact>(contact));
+            var newContact = _mapper.Map<ContactDto, Contact>(contact);
+            await ValidateContactAndTelephoneNumbers(newContact);
+          
+            var createdContact = await _contactRepository.CreateAsync(newContact);
             return _mapper.Map<Contact, ContactDto>(createdContact);    
+        }
+
+        private async Task ValidateContactAndTelephoneNumbers(Contact newContact, int? excludedContactId = null)
+        {
+            if (await _contactRepository.IsDuplicateAsync(newContact, excludedContactId))
+            {
+                throw new DuplicateContactException("A contact with the same name and address already exists.");
+            }
+            if (await _contactTelephoneNumberRepository.IsDuplicateAsync(newContact.TelephoneNumbers.Select(x => x.TelephoneNumber), excludedContactId))
+            {
+                throw new DuplicateTelephoneNumberException("A contact with the same number(s) already exists.");
+            }
         }
 
         /// <summary>
@@ -85,9 +101,11 @@ namespace AddressBook.Application.Services
         public async Task<ContactDto> UpdateAsync(int id, ContactDto contact)
         {
             contact.Id = id;
+            var newContact = _mapper.Map<ContactDto, Contact>(contact);
+            await ValidateContactAndTelephoneNumbers(newContact, id);
             var existingTelephoneNumbers = await _contactTelephoneNumberRepository.GetAllByContactIdAsync(contact.Id);
             await _contactTelephoneNumberRepository.DeleteRangeAsync(existingTelephoneNumbers.Select(x => x.Id));
-            var updatedContact = await _contactRepository.UpdateAsync(_mapper.Map<ContactDto, Contact>(contact));
+            var updatedContact = await _contactRepository.UpdateAsync(newContact);
             return _mapper.Map<Contact, ContactDto>(updatedContact); ;
         }
 

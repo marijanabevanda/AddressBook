@@ -14,5 +14,6 @@ namespace AddressBook.Domain.Interfaces
         Task CreateRangeAsync(IEnumerable<ContactTelephoneNumber> telephoneNumbers);
         Task UpdateRangeAsync(IEnumerable<ContactTelephoneNumber> telephoneNumbers);
         Task DeleteRangeAsync(IEnumerable<int> telephoneNumbersIds);
+        Task<bool> IsDuplicateAsync(IEnumerable<string> telephoneNumbers, int? excludedContactId = null);
     }
 }

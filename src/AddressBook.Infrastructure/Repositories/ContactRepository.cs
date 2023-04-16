@@ -56,6 +56,13 @@ namespace AddressBook.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<bool> IsDuplicateAsync(Contact contact, int? excludedContactId = null)
+        {
+            return await _dbContext.Contacts
+                .Where(x=>x.Id != excludedContactId)
+                .AnyAsync(x=>x.Name.ToLower() == contact.Name.ToLower() && x.Address.ToLower() == contact.Address.ToLower()); 
+        }
+
         public async Task<Contact> UpdateAsync(Contact contact)
         {
              _dbContext.Contacts.Update(contact);

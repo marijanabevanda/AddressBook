@@ -37,6 +37,13 @@ namespace AddressBook.Infrastructure.Repositories
             return await _dbContext.ContactTelephoneNumbers.Where(x => x.ContactId == contactId).ToListAsync();
         }
 
+        public async Task<bool> IsDuplicateAsync(IEnumerable<string> telephoneNumbers, int? excludedContactId = null)
+        {
+           return await _dbContext.ContactTelephoneNumbers
+                .Where(x=>x.ContactId != excludedContactId)
+                .AnyAsync(x => telephoneNumbers.Contains(x.TelephoneNumber));
+        }
+
         public async Task UpdateRangeAsync(IEnumerable<ContactTelephoneNumber> telephoneNumbers)
         {
             _dbContext.ContactTelephoneNumbers.UpdateRange(telephoneNumbers);

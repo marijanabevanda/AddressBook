@@ -9,6 +9,7 @@ using AddressBook.Api.Extensions.ServiceExtensions;
 using AddressBook.Application;
 using System.Reflection;
 using AddressBook.Api.Mapper;
+using AddressBook.Api.Filters;
 
 namespace AddressBook.Api
 {
@@ -37,8 +38,9 @@ namespace AddressBook.Api
             services.AddAutoMapper(typeof(Mapping).GetTypeInfo().Assembly);
             services.AddAutoMapper(typeof(ApiMapping).GetTypeInfo().Assembly);
             services.AddConfiguredDbContext(Configuration, Environment.IsDevelopment())
-                .AddRepositories()
-                .AddDtoServices();
+                .RegisterRepositories()
+                .RegisterServices()
+                .RegisterValidators();
 
         }
 
@@ -51,7 +53,7 @@ namespace AddressBook.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressBook.Api v1"));
             }
-
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
