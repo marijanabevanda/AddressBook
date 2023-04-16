@@ -1,5 +1,5 @@
-### Address Book Application
-This is a web application that provides a public address book functionality. Users can view, create, update, and delete contacts. Contacts contain name, date of birth, address, and multiple telephone numbers, and they are unique by name and address.
+# Address Book Application
+This is a web application that provides a public address book functionality. Users can view, create, update, and delete contacts. Contacts contain name, date of birth, address, and multiple telephone numbers, and each phone number can only be associated with one contact. Contacts are unique by name and address.
 
 The application is built using .NET Core Web API and PostgreSQL database. SignalR is used to provide real-time updates to connected clients.
 
@@ -20,7 +20,7 @@ The application is built using .NET Core Web API and PostgreSQL database. Signal
 - The application should now be running
 
 ## Endpoints
-# Get Paged Contacts
+### Get Paged Contacts
 GET /api/contacts
 
 Query parameters:
@@ -30,12 +30,12 @@ Query parameters:
 
 Returns a paged list of contacts.
 
-# Get Contact By Id
+### Get Contact By Id
 GET /api/contacts/{id}
 
 Returns a contact by ID.
 
-# Create Contact
+### Create Contact
 POST /api/contacts
 
 Body:
@@ -52,7 +52,7 @@ Body:
 Creates a new contact.
 
 
-# Update Contact
+### Update Contact
 PUT /api/contacts/{id}
 
 Body:
@@ -68,7 +68,7 @@ Body:
 ```
 Updates an existing contact.
 
-# Delete Contact
+### Delete Contact
 DELETE /api/contacts/{id}
 
 Deletes a contact by ID.
