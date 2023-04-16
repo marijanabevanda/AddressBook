@@ -114,6 +114,7 @@ namespace AddressBook.Api.Controllers
 
 
             var updatedContact = await _contactService.UpdateAsync(id, _mapper.Map<UpdateContactRequest, ContactDto>(request));
+            await _contactHubContext.Clients.All.SendAsync("Updated contact with name ", updatedContact.Name);
 
             return Ok(updatedContact);
 
@@ -132,6 +133,7 @@ namespace AddressBook.Api.Controllers
             }
 
             await _contactService.DeleteAsync(id);
+            await _contactHubContext.Clients.All.SendAsync("Deleted contact with name ", existingContact.Name);
 
             return NoContent();
 
