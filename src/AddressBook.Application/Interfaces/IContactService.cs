@@ -18,19 +18,22 @@ namespace AddressBook.Application.Interfaces
         /// </summary>
         /// <param name="pageNumber">The page number to retrieve</param>
         /// <param name="pageSize">The number of contacts per page</param>
-        /// <returns>The retrieved list of contacts, including telephone numbers</returns>
+        /// <returns>The retrieved list of contacts, including telephone numbers, and the total count of contacts</returns>
         Task<(List<ContactDto> Contacts, int TotalCount)> GetPagedWithTelephoneNumbersAsync(int pageNumber, int pageSize);
 
         /// <summary>
         /// Creates a new contact with the provided information, including telephone numbers
         /// </summary>
         /// <param name="contact">The contact information to create</param>
+        /// <returns>The created contact information, including telephone numbers</returns>
         Task<ContactDto> CreateAsync(ContactDto contact);
 
         /// <summary>
         /// Updates the information of the contact with the provided information, including telephone numbers
         /// </summary>
+        /// <param name="id">The ID of the contact to update</param>
         /// <param name="contact">The updated contact information, including telephone numbers</param>
+        /// <returns>The updated contact information, including telephone numbers</returns>
         Task<ContactDto> UpdateAsync(int id, ContactDto contact);
 
         /// <summary>

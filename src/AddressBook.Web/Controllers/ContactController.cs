@@ -44,7 +44,7 @@ namespace AddressBook.Api.Controllers
             _contactHubContext = contactHubContext;
         }
 
-        [HttpGet]
+        [HttpGet] // api/contacts
         public async Task<IActionResult> GetPaged([FromQuery] PagingRequest request)
         {
 
@@ -59,7 +59,7 @@ namespace AddressBook.Api.Controllers
             return Ok(new PagedResponse<GetContactResponse>(_mapper.Map<List<ContactDto>, List<GetContactResponse>>(contacts), totalCount, validRequest.PageNumber, validRequest.PageSize));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] // api/contacts/{id}
         public async Task<IActionResult> GetContactById(int id)
         {
 
@@ -74,7 +74,7 @@ namespace AddressBook.Api.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost] // api/contacts
         public async Task<IActionResult> CreateContact([FromBody] CreateContactRequest request)
         {
 
@@ -94,7 +94,7 @@ namespace AddressBook.Api.Controllers
 
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] // api/contacts/{id}
         public async Task<IActionResult> UpdateContact(int id, [FromBody] UpdateContactRequest request)
         {
             ValidationResult result = await _updateValidator.ValidateAsync(request);
@@ -121,7 +121,7 @@ namespace AddressBook.Api.Controllers
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] // api/contacts/{id}
         public async Task<IActionResult> DeleteContact(int id)
         {
 
